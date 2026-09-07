@@ -1,4 +1,4 @@
-package br.com.fiap.ms_educamais;
+package br.com.fiap.ms.educamais;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
