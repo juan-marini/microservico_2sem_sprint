@@ -40,9 +40,6 @@ public class Aula {
     private TipoAula tipo;
 
     @Column(nullable = false)
-    private Boolean concluida;
-
-    @Column(nullable = false)
     private Integer ordem;
 
     @ManyToOne(optional = false)

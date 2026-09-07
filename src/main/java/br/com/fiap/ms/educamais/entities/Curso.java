@@ -3,8 +3,6 @@ package br.com.fiap.ms.educamais.entities;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -49,13 +47,6 @@ public class Curso {
     private Integer cargaHoraria;
 
     @Column(nullable = false)
-    private Double progresso;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private RiscoEvasao risco;
-
-    @Column(nullable = false)
     private Boolean obrigatorio;
 
     private LocalDate prazo;
@@ -64,38 +55,19 @@ public class Curso {
     @OrderBy("ordem ASC")
     private List<Modulo> modulos = new ArrayList<>();
 
-    public Integer getPercentual() {
-        if (progresso == null) {
-            return 0;
-        }
-        return (int) Math.round(progresso * 100);
-    }
-
-    public Boolean getConcluido() {
-        return progresso != null && progresso >= 1.0;
-    }
-
-    public Boolean getNaoIniciado() {
-        return progresso == null || progresso == 0.0;
-    }
-
     public Integer getTotalAulas() {
         return modulos.stream()
                 .mapToInt(Modulo::getTotalAulas)
                 .sum();
     }
 
-    public Integer getAulasConcluidas() {
-        return modulos.stream()
-                .mapToInt(Modulo::getAulasConcluidas)
-                .sum();
+    public Integer getTotalModulos() {
+        return modulos.size();
     }
 
-    public Aula getProximaAula() {
+    public List<Aula> getAulasEmOrdem() {
         return modulos.stream()
                 .flatMap(modulo -> modulo.getAulas().stream())
-                .filter(aula -> !Boolean.TRUE.equals(aula.getConcluida()))
-                .findFirst()
-                .orElse(null);
+                .toList();
     }
 }

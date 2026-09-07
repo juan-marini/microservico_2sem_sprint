@@ -50,23 +50,6 @@ public class Modulo {
         return aulas.size();
     }
 
-    public Integer getAulasConcluidas() {
-        return (int) aulas.stream()
-                .filter(aula -> Boolean.TRUE.equals(aula.getConcluida()))
-                .count();
-    }
-
-    public Double getProgresso() {
-        if (aulas.isEmpty()) {
-            return 0.0;
-        }
-        return (double) getAulasConcluidas() / aulas.size();
-    }
-
-    public Boolean getConcluido() {
-        return !aulas.isEmpty() && getAulasConcluidas().equals(aulas.size());
-    }
-
     public Integer getDuracaoMinutos() {
         return aulas.stream()
                 .mapToInt(Aula::getDuracaoMinutos)
